@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan Approval Predictor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="wrapper">
+    <h1 class="main-title">Loan Approval Prediction</h1>
+
+    <div class="container">
+      <form method="POST" action="/predict">
+        <label>Gender (0 = Female, 1 = Male):</label>
+        <input type="text" name="Gender" required>
+
+        <label>Married (0 = No, 1 = Yes):</label>
+        <input type="text" name="Married" required>
+
+        <label>Dependents (0, 1, 2, 3):</label>
+        <input type="text" name="Dependents" required>
+
+        <label>Education (0 = Graduate, 1 = Not Graduate):</label>
+        <input type="text" name="Education" required>
+
+        <label>Self Employed (0 = No, 1 = Yes):</label>
+        <input type="text" name="Self_Employed" required>
+
+        <label>Applicant Income:</label>
+        <input type="text" name="ApplicantIncome" required>
+
+        <label>Coapplicant Income:</label>
+        <input type="text" name="CoapplicantIncome" required>
+
+        <label>Loan Amount:</label>
+        <input type="text" name="LoanAmount" required>
+
+        <label>Loan Amount Term (e.g., 360):</label>
+        <input type="text" name="Loan_Amount_Term" required>
+
+        <label>Credit History (0 = No, 1 = Yes):</label>
+        <input type="text" name="Credit_History" required>
+
+        <label>Property Area (0 = Rural, 1 = Semiurban, 2 = Urban):</label>
+        <input type="text" name="Property_Area" required>
+
+        <button type="submit">Predict</button>
+      </form>
+
+      {% if prediction_text %}
+        <div class="result">
+          <h2>{{ prediction_text }}</h2>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if history %}
+      <div class="history">
+        <h2>Prediction History</h2>
+        <ul>
+          {% for item in history[::-1] %}
+            <li><strong>Input:</strong> {{ item.input }} <br> <strong>Result:</strong> {{ item.result }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+  </div>
+</body>
+</html>
